@@ -12,6 +12,7 @@ class CustomCTCLoss(torch.nn.Module):
             prediction_sizes, target_sizes):
         EPS = 1e-7
         loss = self.ctc_loss(logits, labels, prediction_sizes, target_sizes)
+        print(f'{loss=}')
         loss = self.sanitize(loss)
         return self.debug(loss, logits, labels, prediction_sizes, target_sizes)
     

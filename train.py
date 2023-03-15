@@ -2,7 +2,7 @@ from src.utils import gmkdir
 from src.datasets import SynthDataset, SynthCollator
 from src.model import CRNN
 from src.loss import CustomCTCLoss
-from src.Learner import Learner
+from src.learner import Learner
 from torch.utils.data import random_split
 import os
 import torch
@@ -16,13 +16,13 @@ if __name__ == "__main__":
         "imgH": 32,
         "nChannels": 1,
         "nHidden": 256,
-        "nClasses": len(alphabet),
-        "lr": 0.001,
-        "epochs": 4,
+        "nClasses": len(alphabet) + 1,
+        "lr": 0.0001,
+        "epochs": 10,
         "batch_size": 32,
         "save_dir": "checkpoints",
         "log_dir": "logs",
-        "resume": False,
+        "resume": True,
         "cuda": False,
         "schedule": False,
     }

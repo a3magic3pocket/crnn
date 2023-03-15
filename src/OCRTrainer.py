@@ -62,6 +62,7 @@ class OCRTrainer(object):
         pred_sizes = torch.LongTensor([T for i in range(B)])
         targets = targets.view(-1).contiguous()
         loss = self.loss_fn(logits, targets, pred_sizes, lengths)
+        print(f'{loss=}')
         if report_accuracy:
             probs, preds = logits.max(2)
             preds = preds.transpose(1, 0).contiguous().view(-1)
@@ -118,9 +119,14 @@ class OCRTrainer(object):
 
     def training_step(self, batch):
         loss, ca, wa = self._run_batch(batch, report_accuracy=True)
+        print(f'{loss=}')
+        # loss.requires_grad_(True)
         self.optimizer.zero_grad()
-        loss.requires_grad_(True)
         loss.backward()
+
+        # clip here
+        torch.nn.utils.clip_grad_norm_(self.model.parameters(), 1.0)
+
         self.step()
         output = OrderedDict(
             {"loss": abs(loss.item()), "train_ca": ca.item(), "train_wa": wa.item()}
