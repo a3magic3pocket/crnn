@@ -3,3 +3,4 @@ torchaudio==0.13.1
 torchvision==0.14.1
 textdistance==4.5.0
 tqdm==4.65.0
+matplotlib==3.7.1
