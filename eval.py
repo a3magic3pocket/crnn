@@ -55,20 +55,20 @@ if __name__ == "__main__":
     args = {
         "name": "exp1",
         "path": "data",
-        "imgdir": "test",
+        "imgdir": "venus_test_one",
         "imgH": 32,
         "nChannels": 1,
         "nHidden": 256,
         "nClasses": len(alphabet) + 1,
         "batch_size": 32,
         "save_dir": "checkpoints",
+        'ckpt_name': 'best.ckpt',
         "alphabet": alphabet,
     }
     
-    args['imgdir'] = 'test'
-    args['data'] = SynthDataset(args)
+    args['data'] = SynthDataset(args, is_eval=True)
     args["collate_fn"] = SynthCollator()
-    resume_file = os.path.join(args['save_dir'], args['name'], 'best.ckpt')
+    resume_file = os.path.join(args['save_dir'], args['name'], args['ckpt_name'])
     model = CRNN(args)
     if os.path.isfile(resume_file):
         print('Loading model %s'%resume_file)
